@@ -1,0 +1,63 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table pedido {
+  id integer [primary key]
+  cliente_id integer
+  endereco_id integer
+  status varchar
+  frete float
+  data_compra datetime
+}
+
+Table pedido_produtos {
+  id integer [primary key]
+  pedido_id integer
+  produto_id integer
+  quantidade integer
+}
+
+Table cliente {
+  id integer [primary key]
+  nome varchar
+  cpf_cnpj varchar
+  email varchar
+  telefone varchar
+}
+
+Table cliente_endereco {
+  id integer [primary key]
+  cliente_id integer
+  cep varchar
+  endereco varchar
+  cidade varchar
+  estado varchar
+
+}
+
+Table produto {
+  id integer [primary key]
+  fornecedor_id integer
+  produto varchar
+  estoque integer
+  preco float
+}
+
+Table fornecedor {
+  id integer [primary key]
+  nome varchar
+  email varchar
+  telefone varchar
+}
+
+Ref: cliente.id < cliente_endereco.cliente_id
+
+Ref: cliente.id < pedido.cliente_id
+
+Ref: produto.id < fornecedor.id
+
+Ref: pedido.endereco_id < cliente_endereco.id
+
+Ref: pedido_produtos.pedido_id < pedido.id
+
+Ref: pedido_produtos.produto_id < produto.id
